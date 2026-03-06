@@ -24,8 +24,8 @@
   --sh:0 8px 32px -4px rgba(15,23,42,.09);
   --shl:0 24px 56px -12px rgba(15,23,42,.14);
 }
-html{scroll-behavior:smooth}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--dk2);color:var(--tx);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;background:var(--dk2)}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--dk2);color:var(--tx);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;min-height:100vh}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
 a{color:inherit;text-decoration:none}
 ::-webkit-scrollbar{width:4px}
@@ -39,6 +39,8 @@ body::before{
     radial-gradient(ellipse 60vw 50vh at 92% 80%,rgba(224,242,254,.45),transparent 60%),
     var(--bg);
 }
+/* sections get light bg explicitly */
+.hero,.sec,#adv,#app{background:var(--bg)}
 
 /* ════════════════════════════════════════════════════════════════
    NAVBAR
@@ -59,7 +61,7 @@ nav.scrolled{background:rgba(255,255,255,.96);box-shadow:0 1px 0 rgba(14,165,233
 .nav-links{display:none;gap:32px;list-style:none}
 .nav-links a{font-size:14px;font-weight:500;color:var(--tx);transition:color .2s}
 .nav-links a:hover{color:var(--b1)}
-.nav-cta{display:none;align-items:center;gap:8px;padding:10px 22px;border-radius:99px;font-size:14px;font-weight:700;color:#fff;letter-spacing:-.02em;background:linear-gradient(135deg,var(--b1),var(--b3));box-shadow:0 6px 20px -4px rgba(3,105,161,.35);transition:transform .2s,box-shadow .2s;border:none;cursor:pointer}
+.nav-cta{display:none;align-items:center;gap:8px;padding:10px 22px;border-radius:99px;font-size:14px;font-weight:700;color:#fff;letter-spacing:-.02em;background:linear-gradient(135deg,var(--b1),var(--b3));box-shadow:0 6px 20px -4px rgba(3,105,161,.35);transition:transform .2s,box-shadow .2s;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0}
 .nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px -4px rgba(3,105,161,.45)}
 
 /* Burger — mobile only */
@@ -432,7 +434,7 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
 /* ════════════════════════════════════════════════════════════════
    FOOTER
 ════════════════════════════════════════════════════════════════ */
-.foot{background:var(--dk2);padding:clamp(44px,6vw,80px) 0 clamp(32px,4vw,52px);margin-top:clamp(60px,8vw,100px);padding-bottom:calc(clamp(32px,4vw,52px) + env(safe-area-inset-bottom,0px))}
+.foot{background:var(--dk2);padding:clamp(44px,6vw,80px) 0 calc(clamp(32px,4vw,52px) + env(safe-area-inset-bottom,0px));margin-top:clamp(60px,8vw,100px)}
 .foot-inner{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
 .foot-logo{font-size:24px;font-weight:800;letter-spacing:-.05em;margin-bottom:12px}
 .fll1{color:var(--b3)}.fll2{color:var(--w)}
@@ -537,7 +539,7 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
     <li><a href="#app">Применение</a></li>
     <li><a href="#sci">Документы</a></li>
   </ul>
-  <button class="nav-cta btn" onclick="goTo('#form')">Получить консультацию</button>
+  <button class="nav-cta" onclick="goTo('#form')">Получить консультацию</button>
   <button class="burger" id="burger" onclick="toggleMenu()" aria-label="Меню">
     <span></span><span></span><span></span>
   </button>
