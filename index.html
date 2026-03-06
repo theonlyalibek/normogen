@@ -830,10 +830,10 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
           <div class="fg span2">
             <label class="fl">Прикрепить документы</label>
             <div class="drop" id="drop" ondragover="event.preventDefault();this.classList.add('dov')" ondragleave="this.classList.remove('dov')" ondrop="handleDrop(event)">
-              <input type="file" id="fInput" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this.files)">
+              <input type="file" id="fInput" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" onchange="handleFiles(this.files)">
               <div class="drop-ic">📎</div>
               <div class="drop-tx">Перетащите файлы сюда или нажмите для выбора</div>
-              <div class="drop-hint">PDF, JPG, PNG — до 10 МБ каждый</div>
+              <div class="drop-hint">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX — до 10 МБ каждый</div>
             </div>
             <div class="fchips" id="fchips"></div>
           </div>
