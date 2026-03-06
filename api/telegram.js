@@ -12,15 +12,39 @@ export default async function handler(req, res) {
 
   try {
     if (!TOKEN || !CHAT) {
+      console.error('Missing env vars');
       return res.status(500).json({ error: 'Telegram not configured' });
     }
 
-    const body = req.body || {};
-    const name        = (body.name        || '').trim();
-    const phone       = (body.phone       || '').trim();
-    const city        = (body.city        || '').trim();
-    const diagnosis   = (body.diagnosis   || 'не указан').trim();
-    const description = (body.description || '').trim();
+    // Handle both JSON and FormData
+    let name, phone, city, diagnosis, description;
+    const ct = req.headers['content-type'] || '';
+
+    if (ct.includes('application/json')) {
+      const body = req.body || {};
+      name        = (body.name        || '').trim();
+      phone       = (body.phone       || '').trim();
+      city        = (body.city        || '').trim();
+      diagnosis   = (body.diagnosis   || 'не указан').trim();
+      description = (body.description || '').trim();
+    } else {
+      // parse raw body as JSON fallback
+      let raw = '';
+      await new Promise((resolve) => {
+        req.on('data', chunk => { raw += chunk; });
+        req.on('end', resolve);
+      });
+      try {
+        const body = JSON.parse(raw);
+        name        = (body.name        || '').trim();
+        phone       = (body.phone       || '').trim();
+        city        = (body.city        || '').trim();
+        diagnosis   = (body.diagnosis   || 'не указан').trim();
+        description = (body.description || '').trim();
+      } catch {
+        return res.status(400).json({ error: 'Invalid body' });
+      }
+    }
 
     if (!name || !phone || !city || !description) {
       return res.status(400).json({ error: 'Missing required fields' });
@@ -53,12 +77,12 @@ export default async function handler(req, res) {
     if (!r.ok) {
       const err = await r.text();
       console.error('Telegram error:', err);
-      return res.status(500).json({ error: 'Telegram send failed' });
+      return res.status(500).json({ error: 'Telegram send failed', detail: err });
     }
 
     return res.status(200).json({ success: true });
   } catch (e) {
-    console.error(e);
-    return res.status(500).json({ error: 'Server error' });
+    console.error('Handler error:', e);
+    return res.status(500).json({ error: e.message });
   }
 }
