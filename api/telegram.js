@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
   try {
     if (!TOKEN || !CHAT) {
-      console.error('Missing env vars');
+      console.error('Missing env vars: TELEGRAM_BOT_TOKEN=', !!TOKEN, 'TELEGRAM_CHAT_ID=', !!CHAT);
       return res.status(500).json({ error: 'Telegram not configured' });
     }
 
@@ -76,7 +76,7 @@ export default async function handler(req, res) {
 
     if (!r.ok) {
       const err = await r.text();
-      console.error('Telegram error:', err);
+      console.error('Telegram error:', r.status, err);
       return res.status(500).json({ error: 'Telegram send failed', detail: err });
     }
 
