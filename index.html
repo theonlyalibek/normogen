@@ -544,11 +544,11 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
 </nav>
 
 <div class="mob-drawer" id="drawer">
-  <a href="#about" onclick="closeMenu()">О препарате</a>
-  <a href="#adv" onclick="closeMenu()">Преимущества</a>
-  <a href="#app" onclick="closeMenu()">Способ применения</a>
-  <a href="#sci" onclick="closeMenu()">Научная база</a>
-  <button class="mob-drawer-cta" onclick="closeMenu();goTo('#form')">Получить консультацию →</button>
+  <a href="#about" onclick="event.preventDefault();goTo('#about')">О препарате</a>
+  <a href="#adv" onclick="event.preventDefault();goTo('#adv')">Преимущества</a>
+  <a href="#app" onclick="event.preventDefault();goTo('#app')">Способ применения</a>
+  <a href="#sci" onclick="event.preventDefault();goTo('#sci')">Научная база</a>
+  <button class="mob-drawer-cta" onclick="goTo('#form')">Получить консультацию →</button>
 </div>
 
 <!-- ══ HERO ══ -->
@@ -855,7 +855,7 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
         <p class="foot-desc">Инновационный таргетный препарат против онкологических заболеваний. Разработка компании FRAN (Казахстан).</p>
         <div class="foot-contacts">
           <div class="foot-ct">📞 <a href="tel:+77017235040">+7 701 723 5040</a></div>
-          <div class="foot-ct">✉️ <a href="/cdn-cgi/l/email-protection#771e1911183711051619591c0d"><span class="__cf_email__" data-cfemail="adc4c3cbc2edcbdfccc383c6d7">[email&#160;protected]</span></a></div>
+          <div class="foot-ct">✉️ <a href="mailto:normogen.fran@gmail.com">normogen.fran@gmail.com</a></div>
         </div>
       </div>
       <div>
@@ -872,7 +872,7 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
         <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:18px">Контакты</div>
         <div class="foot-contacts">
           <div class="foot-ct">📞 +7 701 723 5040</div>
-          <div class="foot-ct">✉️ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d0b9beb6bf90b6a2b1befebbaa">[email&#160;protected]</a></div>
+          <div class="foot-ct">✉️ <a href="mailto:normogen.fran@gmail.com">normogen.fran@gmail.com</a></div>
           <div class="foot-ct">🏢 Казахстан, FRAN</div>
         </div>
       </div>
@@ -884,7 +884,7 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
       <p class="foot-desc">Инновационный таргетный препарат против онкологических заболеваний. Разработка FRAN (Казахстан).</p>
       <div class="foot-contacts">
         <div class="foot-ct">📞 <a href="tel:+77017235040">+7 701 723 5040</a></div>
-        <div class="foot-ct">✉️ <a href="/cdn-cgi/l/email-protection#9df4f3fbf2ddfbeffcf3b3f6e7"><span class="__cf_email__" data-cfemail="6d04030b022d0b1f0c03430617">[email&#160;protected]</span></a></div>
+        <div class="foot-ct">✉️ <a href="mailto:normogen.fran@gmail.com">normogen.fran@gmail.com</a></div>
         <div class="foot-ct">🏢 Казахстан, FRAN</div>
       </div>
       <div class="foot-nav">
@@ -908,11 +908,11 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
 
 <div class="toast" id="toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 /* NAV */
 let mOpen=false;
-function toggleMenu(){mOpen=!mOpen;document.getElementById('burger').classList.toggle('open',mOpen);document.getElementById('drawer').classList.toggle('open',mOpen)}
-function closeMenu(){mOpen=false;document.getElementById('burger').classList.remove('open');document.getElementById('drawer').classList.remove('open')}
+function toggleMenu(){mOpen=!mOpen;document.getElementById('burger').classList.toggle('open',mOpen);document.getElementById('drawer').classList.toggle('open',mOpen);document.body.style.overflow=mOpen?'hidden':''}
+function closeMenu(){mOpen=false;document.getElementById('burger').classList.remove('open');document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''}
 window.addEventListener('scroll',()=>{
   document.getElementById('nav').classList.toggle('scrolled',window.scrollY>12);
   const f=document.getElementById('form');
@@ -931,7 +931,14 @@ function syncFooter(){
 syncFooter();window.addEventListener('resize',syncFooter);
 
 /* SMOOTH SCROLL */
-function goTo(sel){const el=document.querySelector(sel);if(el)el.scrollIntoView({behavior:'smooth'})}
+function goTo(sel){
+  const el=document.querySelector(sel);
+  if(!el)return;
+  closeMenu();
+  const navH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'))||72;
+  const y=el.getBoundingClientRect().top+window.pageYOffset-navH-12;
+  window.scrollTo({top:y,behavior:'smooth'});
+}
 
 /* REVEAL */
 const obs=new IntersectionObserver(ee=>{ee.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')})},{threshold:.07});
@@ -1007,8 +1014,13 @@ document.getElementById('cForm').addEventListener('submit',async e=>{
     e.target.reset();sFiles=[];renderChips();
     ['f-name','f-phone','f-city','f-desc'].forEach(id=>document.getElementById(id).classList.remove('err'));
     ['e-name','e-phone','e-city','e-desc'].forEach(id=>{document.getElementById(id).style.display='none'});
-  }catch{
-    toast('Заявка принята! Свяжемся с вами в течение 24 часов.','ok');
-    e.target.reset();sFiles=[];renderChips();
+  }catch(err){
+    console.error('Form submit error:',err);
+    toast('Ошибка отправки. Позвоните нам: +7 701 723 5040','err');
   }finally{
-    b
+    btn.disabled=false;btn.textContent='Отправить заявку →';
+  }
+});
+</script>
+</body>
+</html>
