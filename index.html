@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Нормоген — Инновационный таргетный препарат | FRAN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════════
+   RESET & TOKENS
+════════════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#F4F8FC;
+  --b1:#0369A1;--b2:#0284C7;--b3:#0EA5E9;--b4:#BAE6FD;
+  --dk:#0B1120;--dk2:#0F172A;
+  --tx:#475569;--txd:#1E293B;--w:#fff;
+  --nav-h:68px;
+  --max:1280px;
+  --pad:clamp(20px,5vw,88px);
+  --r:28px;--rs:18px;
+  --sh:0 8px 32px -4px rgba(15,23,42,.09);
+  --shl:0 24px 56px -12px rgba(15,23,42,.14);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--dk2);color:var(--tx);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--b2);border-radius:99px}
+
+/* ════ GLOBAL BACKGROUND ════ */
+body::before{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 120vw 60vh at 50% -10%,rgba(186,230,253,.6),transparent 65%),
+    radial-gradient(ellipse 60vw 50vh at 92% 80%,rgba(224,242,254,.45),transparent 60%),
+    var(--bg);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   NAVBAR
+════════════════════════════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:var(--nav-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--pad);
+  background:rgba(244,248,252,.8);
+  backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-bottom:1px solid rgba(14,165,233,.1);
+  transition:background .3s,box-shadow .3s;
+}
+nav.scrolled{background:rgba(255,255,255,.96);box-shadow:0 1px 0 rgba(14,165,233,.08),0 6px 32px -6px rgba(15,23,42,.1)}
+.nav-logo{font-size:21px;font-weight:800;letter-spacing:-.05em;flex-shrink:0}
+.n1{color:var(--b1)}.n2{color:var(--txd)}
+.nav-links{display:none;gap:32px;list-style:none}
+.nav-links a{font-size:14px;font-weight:500;color:var(--tx);transition:color .2s}
+.nav-links a:hover{color:var(--b1)}
+.nav-cta{display:none;align-items:center;gap:8px;padding:10px 22px;border-radius:99px;font-size:14px;font-weight:700;color:#fff;letter-spacing:-.02em;background:linear-gradient(135deg,var(--b1),var(--b3));box-shadow:0 6px 20px -4px rgba(3,105,161,.35);transition:transform .2s,box-shadow .2s;border:none;cursor:pointer}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px -4px rgba(3,105,161,.45)}
+
+/* Burger — mobile only */
+.burger{width:40px;height:40px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.15)}
+.burger span{display:block;width:18px;height:1.5px;background:var(--txd);border-radius:99px;transform-origin:center;transition:transform .3s,opacity .3s}
+.burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mob-drawer{
+  position:fixed;top:var(--nav-h);left:0;right:0;z-index:190;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(14,165,233,.1);
+  padding:14px;display:flex;flex-direction:column;gap:3px;
+  transform:translateY(-110%);transition:transform .4s cubic-bezier(.16,1,.3,1);
+  box-shadow:0 16px 48px -8px rgba(15,23,42,.12);
+}
+.mob-drawer.open{transform:translateY(0)}
+.mob-drawer a{padding:13px 15px;border-radius:12px;font-size:16px;font-weight:600;color:var(--txd);display:flex;align-items:center;justify-content:space-between;transition:background .15s}
+.mob-drawer a::after{content:'→';color:var(--b3);opacity:.5}
+.mob-drawer a:active{background:rgba(14,165,233,.07)}
+.mob-drawer-cta{margin-top:8px;padding:15px;border-radius:14px;font-size:16px;font-weight:700;color:#fff;text-align:center;background:linear-gradient(135deg,var(--b1),var(--b3));box-shadow:0 8px 24px -4px rgba(3,105,161,.35);letter-spacing:-.02em;cursor:pointer;border:none}
+
+/* ════════════════════════════════════════════════════════════════
+   SHARED UTILITIES
+════════════════════════════════════════════════════════════════ */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.lbl{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--b2);margin-bottom:14px}
+.lbl::before{content:'';width:22px;height:2px;background:var(--b2);border-radius:99px;flex-shrink:0}
+h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);margin-bottom:12px;font-size:clamp(28px,3.5vw,48px)}
+.sub{font-size:clamp(15px,1.4vw,17px);color:var(--tx);line-height:1.72;max-width:520px}
+.sec{padding:clamp(56px,8vw,112px) 0}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:14px 28px;border-radius:99px;font-size:15px;font-weight:700;letter-spacing:-.02em;color:#fff;background:linear-gradient(135deg,var(--b1),var(--b3));box-shadow:0 8px 24px -4px rgba(3,105,161,.38);transition:transform .18s,box-shadow .2s;white-space:nowrap;border:none;cursor:pointer;-webkit-appearance:none}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px -4px rgba(3,105,161,.48)}
+.btn:active{transform:scale(.97)}
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:14px 22px;border-radius:99px;font-size:15px;font-weight:700;color:var(--b1);background:rgba(14,165,233,.09);border:1.5px solid rgba(14,165,233,.2);letter-spacing:-.02em;transition:background .2s;cursor:pointer;-webkit-appearance:none}
+.btn-ghost:hover{background:rgba(14,165,233,.15)}
+
+.tag{display:inline-flex;padding:5px 12px;border-radius:99px;font-size:12px;font-weight:600;color:var(--b1);background:rgba(14,165,233,.09);border:1px solid rgba(14,165,233,.18)}
+
+/* Reveal */
+.rv{opacity:1;transform:none;transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
+.rv.on{opacity:1;transform:none}
+
+/* ════════════════════════════════════════════════════════════════
+   HERO
+════════════════════════════════════════════════════════════════ */
+.hero{
+  min-height:100svh;min-height:100vh;
+  padding-top:var(--nav-h);
+  display:flex;align-items:center;
+  position:relative;overflow:hidden;
+}
+.hero-wrap{
+  max-width:var(--max);margin:0 auto;padding:0 var(--pad);
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0;
+  align-items:center;
+}
+
+/* Desktop: text left, visual right */
+@media(min-width:900px){
+  .hero-wrap{grid-template-columns:1fr 1fr;gap:40px;min-height:calc(100vh - var(--nav-h))}
+}
+
+/* Blobs */
+.hb1,.hb2{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+.hb1{top:5%;right:-10%;width:clamp(280px,40vw,560px);height:clamp(280px,40vw,560px);background:radial-gradient(circle at 40% 40%,rgba(14,165,233,.16),rgba(3,105,161,.04) 60%,transparent);animation:bf 9s ease-in-out infinite}
+.hb2{bottom:8%;left:-8%;width:clamp(200px,28vw,380px);height:clamp(200px,28vw,380px);background:radial-gradient(circle,rgba(186,230,253,.4),transparent 70%);animation:bf 13s ease-in-out infinite reverse}
+@keyframes bf{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(14px,-18px) scale(1.05)}66%{transform:translate(-9px,11px) scale(.96)}}
+
+.hero-text{position:relative;z-index:2;padding:clamp(40px,8vw,100px) 0}
+
+@media(min-width:900px){
+  .hero-text{padding:80px 0}
+}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.22);color:var(--b1);padding:7px 16px;border-radius:99px;font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:22px}
+.hbdot{width:7px;height:7px;border-radius:50%;background:var(--b3);box-shadow:0 0 8px var(--b3);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(1.45)}}
+
+.hero h1{
+  font-weight:800;letter-spacing:-.035em;line-height:1.04;color:var(--txd);
+  font-size:clamp(34px,6vw,72px);
+  margin-bottom:18px;
+}
+.hl{background:linear-gradient(135deg,var(--b1),var(--b3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.hero-sub{font-size:clamp(15px,1.5vw,18px);line-height:1.72;color:var(--tx);margin-bottom:30px;max-width:500px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
+
+/* Stats bar */
+.hero-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;border-radius:20px;overflow:hidden;
+  background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.12);
+  max-width:560px;
+}
+.stat{background:rgba(255,255,255,.72);backdrop-filter:blur(12px);padding:clamp(12px,2vw,20px) clamp(10px,2vw,28px);display:flex;flex-direction:column;align-items:center;text-align:center}
+.stat-n{font-size:clamp(18px,2.5vw,30px);font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--txd);margin-bottom:5px}
+.stat-n b{color:var(--b2)}
+.stat-l{font-size:clamp(10px,1vw,12px);font-weight:600;color:var(--tx);line-height:1.3}
+
+/* Molecule — right column on desktop, small centered on mobile */
+.hero-visual{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;
+  height:clamp(200px,40vw,560px);
+}
+@media(max-width:899px){
+  .hero-visual{height:160px;margin:8px 0 24px}
+}
+
+.mol{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.mol-core{
+  border-radius:50%;
+  background:radial-gradient(circle at 33% 30%,#38BDF8,#0284C7 45%,#0B1120 85%);
+  box-shadow:0 0 60px 20px rgba(14,165,233,.22),0 0 120px 40px rgba(3,105,161,.1),inset 0 0 40px rgba(255,255,255,.1);
+  animation:mf 6s ease-in-out infinite;
+  width:clamp(90px,14vw,220px);height:clamp(90px,14vw,220px);
+  flex-shrink:0;position:relative;
+}
+.mol-core::after{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 28% 24%,rgba(255,255,255,.3),transparent 52%)}
+@keyframes mf{0%,100%{transform:translateY(0) rotate(0deg)}33%{transform:translateY(-14px) rotate(3deg)}66%{transform:translateY(7px) rotate(-2deg)}}
+
+.mol-ring{position:absolute;border-radius:50%;border:1px dashed rgba(14,165,233,.25)}
+.mol-r1{animation:sp 16s linear infinite}
+.mol-r2{animation:sp 26s linear infinite reverse}
+.mol-r3{animation:sp 38s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+.mol-dot{position:absolute;border-radius:50%;background:linear-gradient(135deg,var(--b3),var(--b1));box-shadow:0 0 10px rgba(14,165,233,.8)}
+
+@media(max-width:899px){
+  .mol-core{width:80px;height:80px}
+}
+
+/* Orbit sizes — use CSS vars so they scale */
+.mol-r1{
+  width:calc(var(--core,160px) * 1.6);height:calc(var(--core,160px) * 1.6);
+  top:50%;left:50%;
+  transform-origin:center center;
+  margin-top:calc(var(--core,160px) * -.8);
+  margin-left:calc(var(--core,160px) * -.8);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ABOUT — BENTO GRID (desktop) / scroll cards (mobile)
+════════════════════════════════════════════════════════════════ */
+.about-hdr{margin-bottom:clamp(28px,4vw,52px)}
+
+/* Mobile: horizontal scroll */
+.bscroll{
+  display:flex;gap:14px;
+  padding:4px var(--pad) 14px;
+  overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;-ms-overflow-style:none;
+  -webkit-overflow-scrolling:touch;
+}
+.bscroll::-webkit-scrollbar{display:none}
+.bi{flex:0 0 82vw;max-width:300px;scroll-snap-align:start}
+.sdots{display:flex;gap:5px;justify-content:center;margin-top:8px;padding:0 var(--pad)}
+.sdot{width:6px;height:6px;border-radius:99px;background:rgba(14,165,233,.2);transition:all .3s}
+.sdot.on{width:20px;background:var(--b2)}
+
+/* Desktop: proper bento grid */
+.bento{
+  display:none;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:auto auto;
+  gap:18px;
+}
+
+/* Card base */
+.bc{
+  border-radius:var(--r);
+  padding:clamp(28px,3vw,44px);
+  position:relative;overflow:hidden;
+  transition:transform .3s,box-shadow .3s;
+}
+.bc:hover{transform:translateY(-4px);box-shadow:var(--shl)}
+
+/* Dark — mechanism, spans 2 cols */
+.bc-dk{
+  grid-column:1/3;
+  background:var(--dk2);
+  box-shadow:0 20px 48px -10px rgba(11,17,32,.4);
+}
+.bc-dk::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:280px;height:280px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(14,165,233,.18),transparent 70%);
+}
+.bc-dk .bc-lbl{color:rgba(255,255,255,.4)}
+.bc-dk .bc-ttl{color:#fff;font-size:clamp(20px,2vw,26px)}
+.bc-dk .bc-txt{color:rgba(255,255,255,.65)}
+.bc-pill{display:inline-block;margin-top:22px;padding:9px 18px;border-radius:99px;background:rgba(14,165,233,.14);border:1px solid rgba(14,165,233,.28);color:#38BDF8;font-size:12px;font-weight:600}
+
+/* Blue gradient — efficacy */
+.bc-bl{
+  grid-column:3/4;
+  background:linear-gradient(140deg,var(--b1),var(--b2));
+  box-shadow:0 20px 48px -10px rgba(3,105,161,.45);
+}
+.bc-bl .bc-lbl{color:rgba(255,255,255,.5)}
+.bc-bl .bc-txt{color:rgba(255,255,255,.75)}
+.bignum{font-size:clamp(56px,6vw,80px);font-weight:800;letter-spacing:-.05em;line-height:1;color:#fff;margin:8px 0 8px}
+.bignum sup{font-size:.45em;vertical-align:super}
+
+/* Light — composition */
+.bc-lt{background:var(--w);border:1px solid rgba(255,255,255,.7);box-shadow:var(--sh)}
+
+/* Sky — safety, spans 2 cols */
+.bc-sk{
+  grid-column:2/4;
+  background:linear-gradient(135deg,#EFF6FF,#DBEAFE);
+  border:1px solid rgba(59,130,246,.12);
+}
+
+.bc-lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--b2);margin-bottom:14px}
+.bc-ttl{font-size:clamp(17px,1.8vw,22px);font-weight:800;letter-spacing:-.025em;line-height:1.2;color:var(--txd);margin-bottom:11px}
+.bc-txt{font-size:clamp(13px,1.2vw,15px);line-height:1.68;color:var(--tx)}
+
+/* Mobile card shell */
+.bi-card{border-radius:22px;padding:24px 22px;position:relative;overflow:hidden}
+.bi-dk{background:var(--dk2);box-shadow:0 14px 36px -6px rgba(11,17,32,.42)}
+.bi-dk::before{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,233,.2),transparent 70%);pointer-events:none}
+.bi-dk .bc-lbl{color:rgba(255,255,255,.4)}.bi-dk .bc-ttl{color:#fff}.bi-dk .bc-txt{color:rgba(255,255,255,.65)}
+.bi-pill{display:inline-block;margin-top:14px;padding:7px 14px;border-radius:99px;background:rgba(14,165,233,.14);border:1px solid rgba(14,165,233,.28);color:#38BDF8;font-size:11.5px;font-weight:600}
+.bi-bl{background:linear-gradient(140deg,var(--b1),var(--b2));box-shadow:0 14px 36px -6px rgba(3,105,161,.45)}
+.bi-bl .bc-lbl{color:rgba(255,255,255,.5)}.bi-bl .bc-txt{color:rgba(255,255,255,.75)}
+.bi-lt{background:var(--w);border:1px solid rgba(14,165,233,.1);box-shadow:var(--sh)}
+.bi-sk{background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border:1px solid rgba(59,130,246,.1)}
+.bi-bignum{font-size:52px;font-weight:800;letter-spacing:-.05em;line-height:1;color:#fff;margin:5px 0 6px}
+.bi-bignum sup{font-size:.44em;vertical-align:super}
+
+/* ════════════════════════════════════════════════════════════════
+   ADVANTAGES
+════════════════════════════════════════════════════════════════ */
+.adv-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;margin-top:8px;
+}
+.adv-card{
+  display:flex;align-items:flex-start;gap:16px;
+  background:var(--w);border-radius:20px;padding:18px 18px;
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 4px 16px -4px rgba(15,23,42,.07);
+  transition:transform .2s,box-shadow .2s;
+}
+.adv-card:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+.adv-ico{width:48px;height:48px;flex-shrink:0;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.adv-card:nth-child(1) .adv-ico{background:#FEF9C3}
+.adv-card:nth-child(2) .adv-ico{background:#DCFCE7}
+.adv-card:nth-child(3) .adv-ico{background:#EDE9FE}
+.adv-card:nth-child(4) .adv-ico{background:#FFE4E6}
+.adv-nm{font-size:16px;font-weight:700;color:var(--txd);letter-spacing:-.02em;margin-bottom:5px}
+.adv-ds{font-size:13.5px;line-height:1.62;color:var(--tx)}
+
+/* ════════════════════════════════════════════════════════════════
+   APPLICATION
+════════════════════════════════════════════════════════════════ */
+.meth-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.mcard{border-radius:var(--r);padding:clamp(22px,3vw,44px);position:relative;overflow:hidden}
+.mcard-p{background:var(--w);border:2px solid var(--b2);box-shadow:0 12px 36px -6px rgba(2,132,199,.2)}
+.mcard-p::before{content:'';position:absolute;top:0;left:clamp(20px,3vw,32px);right:clamp(20px,3vw,32px);height:2px;background:linear-gradient(90deg,transparent,var(--b3),transparent)}
+.mcard-s{background:var(--w);border:1px solid rgba(255,255,255,.7);box-shadow:var(--sh)}
+.mbadge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.03em;margin-bottom:14px}
+.mbadge-p{background:linear-gradient(135deg,var(--b1),var(--b3));color:#fff}
+.mbadge-s{background:#F1F5F9;color:var(--tx);border:1px solid #E2E8F0}
+.mttl{font-size:clamp(20px,2vw,26px);font-weight:800;color:var(--txd);letter-spacing:-.03em;margin-bottom:10px;line-height:1.15}
+.mdesc{font-size:clamp(13.5px,1.3vw,15px);line-height:1.68;color:var(--tx);margin-bottom:18px}
+.mrows{display:flex;flex-direction:column;gap:11px}
+.mrow{display:flex;gap:12px;align-items:flex-start}
+.mrow-i{font-size:17px;flex-shrink:0;margin-top:1px}
+.mrow-t{font-size:clamp(13px,1.2vw,14.5px);color:var(--tx);line-height:1.5}
+.mrow-t strong{color:var(--txd);font-weight:600}
+
+/* ════════════════════════════════════════════════════════════════
+   SCIENCE (dark)
+════════════════════════════════════════════════════════════════ */
+.sci-wrap{background:var(--dk);padding:clamp(56px,8vw,112px) 0;position:relative;overflow:hidden}
+.sci-wrap::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80vw 50vh at 15% 55%,rgba(2,132,199,.13),transparent 70%),radial-gradient(ellipse 60vw 40vh at 85% 20%,rgba(3,105,161,.09),transparent 70%)}
+/* subtle noise */
+.sci-wrap::after{content:'';position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");background-size:180px 180px;opacity:.35}
+.sci-wrap>*{position:relative;z-index:1}
+.sci-inner{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.sci-lbl{color:#38BDF8}.sci-lbl::before{background:#38BDF8}
+.sci-ttl{color:#F8FAFC}.sci-sub{color:rgba(248,250,252,.55)}
+
+.sci-cards{display:grid;grid-template-columns:1fr;gap:13px;margin-top:clamp(24px,3vw,40px)}
+.scard{padding:clamp(20px,2.5vw,36px);border-radius:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .3s,border-color .3s}
+.scard:hover{background:rgba(255,255,255,.07);border-color:rgba(14,165,233,.25)}
+.scard-ic{width:44px;height:44px;border-radius:14px;background:rgba(14,165,233,.14);border:1px solid rgba(14,165,233,.22);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
+.scard-ttl{font-size:clamp(15px,1.5vw,18px);font-weight:700;color:#F1F5F9;letter-spacing:-.02em;margin-bottom:8px}
+.scard-txt{font-size:clamp(13px,1.2vw,14.5px);line-height:1.68;color:rgba(241,245,249,.58)}
+
+.sci-quote{margin-top:clamp(18px,2.5vw,28px);padding:clamp(22px,3vw,44px);border-radius:22px;background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.18);position:relative}
+.sci-qm{font-size:clamp(60px,8vw,100px);font-family:Georgia,serif;font-weight:700;color:rgba(14,165,233,.18);line-height:1;position:absolute;top:8px;left:clamp(14px,2vw,28px);pointer-events:none;user-select:none}
+.sci-qt{font-size:clamp(15px,1.6vw,20px);font-weight:600;color:#E2E8F0;line-height:1.55;letter-spacing:-.02em;padding-top:clamp(12px,2vw,24px);position:relative;z-index:1}
+.sci-qs{margin-top:12px;font-size:clamp(12px,1.1vw,14px);color:rgba(148,163,184,.7);font-weight:500}
+
+/* ════════════════════════════════════════════════════════════════
+   CONTACT FORM
+════════════════════════════════════════════════════════════════ */
+.form-wrap{
+  max-width:var(--max);margin:0 auto;
+  padding:0 var(--pad);
+  position:relative;
+}
+.form-card{
+  background:var(--w);
+  border-radius:var(--r);
+  padding:clamp(28px,4vw,64px);
+  box-shadow:0 -4px 8px -2px rgba(14,165,233,.05),0 32px 72px -16px rgba(15,23,42,.18);
+  border:1px solid rgba(255,255,255,.8);
+  margin-top:clamp(-36px,-4vw,-60px);
+  position:relative;z-index:10;
+}
+.form-hdr{margin-bottom:clamp(22px,3vw,40px)}
+.form-ttl{font-size:clamp(22px,2.8vw,38px);font-weight:800;color:var(--txd);letter-spacing:-.03em;margin-bottom:6px}
+.form-sub{font-size:clamp(13.5px,1.3vw,16px);color:var(--tx);line-height:1.68}
+
+.form-body{display:grid;grid-template-columns:1fr;gap:14px}
+
+.fg{display:flex;flex-direction:column;gap:6px}
+.fg.span2{grid-column:1/-1}
+.fl{font-size:12px;font-weight:700;color:var(--txd);letter-spacing:.01em}
+.fi,.ft{
+  width:100%;padding:13px 16px;border-radius:13px;
+  border:1.5px solid #E2E8F0;background:#F8FAFC;color:var(--txd);
+  font-family:inherit;font-size:clamp(14px,1.2vw,16px);
+  outline:none;transition:border-color .2s,background .2s,box-shadow .2s;-webkit-appearance:none;
+}
+.fi::placeholder,.ft::placeholder{color:#94A3B8}
+.fi:focus,.ft:focus{border-color:var(--b2);background:var(--w);box-shadow:0 0 0 4px rgba(14,165,233,.09)}
+.fi.err,.ft.err{border-color:#F87171}
+.ft{min-height:100px;resize:vertical}
+.ferr{font-size:11px;color:#EF4444;font-weight:500;margin-top:2px}
+
+/* Dropzone */
+.drop{border:2px dashed #CBD5E1;border-radius:14px;padding:clamp(20px,3vw,36px) 20px;text-align:center;cursor:pointer;transition:all .2s;background:#FAFCFF;position:relative;overflow:hidden}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop.dov,.drop:hover{border-color:var(--b2);background:rgba(14,165,233,.04)}
+.drop-ic{font-size:28px;margin-bottom:8px}
+.drop-tx{font-size:clamp(13px,1.3vw,15px);font-weight:600;color:var(--tx)}
+.drop-hint{font-size:12px;color:#94A3B8;margin-top:4px}
+.fchips{display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.fchip{display:flex;align-items:center;gap:9px;padding:9px 13px;border-radius:11px;background:rgba(14,165,233,.06);border:1px solid rgba(14,165,233,.14);font-size:13px;color:var(--txd);font-weight:500}
+.fchip-sz{margin-left:auto;font-size:11px;color:#94A3B8;white-space:nowrap}
+.fchip-rm{margin-left:5px;color:#94A3B8;font-size:17px;line-height:1;background:none;border:none;cursor:pointer;flex-shrink:0}
+
+.bsub{
+  width:100%;padding:clamp(14px,1.8vw,18px);
+  border-radius:15px;font-size:clamp(15px,1.4vw,17px);font-weight:700;letter-spacing:-.02em;
+  color:#fff;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--b1),var(--b3));
+  box-shadow:0 10px 28px -4px rgba(3,105,161,.38);
+  transition:transform .18s,box-shadow .2s;-webkit-appearance:none;
+}
+.bsub:hover{transform:translateY(-2px);box-shadow:0 14px 36px -4px rgba(3,105,161,.48)}
+.bsub:active{transform:scale(.98)}
+.bsub:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+/* ════════════════════════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════════════════════════ */
+.foot{background:var(--dk2);padding:clamp(44px,6vw,80px) 0 clamp(32px,4vw,52px);margin-top:clamp(60px,8vw,100px);padding-bottom:calc(clamp(32px,4vw,52px) + env(safe-area-inset-bottom,0px))}
+.foot-inner{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.foot-logo{font-size:24px;font-weight:800;letter-spacing:-.05em;margin-bottom:12px}
+.fll1{color:var(--b3)}.fll2{color:var(--w)}
+.foot-desc{font-size:13.5px;line-height:1.72;color:rgba(248,250,252,.4);margin-bottom:28px;max-width:280px}
+.foot-contacts{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.foot-ct{display:flex;gap:10px;align-items:center;font-size:14.5px;color:rgba(248,250,252,.68)}
+.foot-ct a{transition:color .2s}.foot-ct a:hover{color:var(--b3)}
+.foot-nav{display:flex;flex-wrap:wrap;gap:10px 20px;margin-bottom:32px}
+.foot-nav a{font-size:13.5px;font-weight:500;color:rgba(248,250,252,.4);transition:color .2s}
+.foot-nav a:hover{color:var(--b3)}
+.foot-hr{height:1px;background:rgba(255,255,255,.07);border:none;margin-bottom:20px}
+.foot-copy{font-size:12px;color:rgba(248,250,252,.3);margin-bottom:10px}
+.foot-disc{font-size:11.5px;line-height:1.65;color:rgba(148,163,184,.45);padding:13px 15px;border-radius:13px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
+
+/* ════════════════════════════════════════════════════════════════
+   MOBILE CTA BAR
+════════════════════════════════════════════════════════════════ */
+.mob-bar{
+  display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150;
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(14,165,233,.1);box-shadow:0 -4px 24px -4px rgba(15,23,42,.1);
+  gap:9px;transition:transform .4s;
+}
+.mob-bar.hidden{transform:translateY(120%)}
+.mob-bar .btn{flex:1;padding:13px;font-size:15px;border-radius:13px}
+.mob-ph{flex:0 0 48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:rgba(14,165,233,.1);border:1.5px solid rgba(14,165,233,.2);font-size:19px;transition:background .2s}
+.mob-ph:hover,.mob-ph:active{background:rgba(14,165,233,.2)}
+
+/* ════════════════════════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════════════════════════ */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9999;padding:13px 20px;border-radius:15px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:9px;opacity:0;transition:all .45s cubic-bezier(.34,1.56,.64,1);box-shadow:0 16px 40px -8px rgba(15,23,42,.2);white-space:nowrap;max-width:calc(100vw - 32px)}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.ok{background:#ECFDF5;color:#065F46;border:1px solid #A7F3D0}
+.toast.bad{background:#FFF1F2;color:#9F1239;border:1px solid #FECDD3}
+
+/* ════════════════════════════════════════════════════════════════
+   TABLET BREAKPOINT (640px+)
+════════════════════════════════════════════════════════════════ */
+@media(min-width:640px){
+  .adv-grid{grid-template-columns:repeat(2,1fr)}
+  .adv-card{padding:22px}
+  .adv-nm{font-size:17px}
+  .adv-ds{font-size:14px}
+}
+
+/* ════════════════════════════════════════════════════════════════
+   DESKTOP BREAKPOINT (900px+)
+════════════════════════════════════════════════════════════════ */
+@media(min-width:900px){
+  :root{--nav-h:72px}
+  nav{padding:0 var(--pad)}
+  .nav-links{display:flex}
+  .nav-cta{display:inline-flex}
+  .burger,.mob-drawer{display:none!important}
+  .mob-bar{display:none}
+
+  /* HERO */
+  .hero-ctas .btn,.hero-ctas .btn-ghost{flex:0}
+
+  /* ABOUT: hide mobile scroll, show bento */
+  .bscroll,.sdots{display:none}
+  .bento{display:grid}
+
+  /* ADVANTAGES: 4-col */
+  .adv-grid{grid-template-columns:repeat(4,1fr);gap:16px}
+  .adv-card{flex-direction:column;padding:32px 28px;gap:0}
+  .adv-ico{margin-bottom:20px;width:56px;height:56px;border-radius:18px;font-size:24px}
+  .adv-nm{font-size:19px;margin-bottom:8px}
+  .adv-ds{font-size:15px}
+
+  /* APPLICATION: side by side */
+  .meth-grid{grid-template-columns:1fr 1fr}
+
+  /* SCIENCE: cards side by side */
+  .sci-cards{grid-template-columns:1fr 1fr}
+
+  /* FORM: 2-col grid */
+  .form-body{grid-template-columns:1fr 1fr}
+  .fg.span2{grid-column:1/-1}
+
+  /* FOOTER: 3-col */
+  .foot-layout{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px;margin-bottom:40px}
+  .foot-desc{margin-bottom:0}
+  .foot-contacts{margin-bottom:0}
+  .foot-nav{flex-direction:column;gap:10px;margin-bottom:0}
+  .foot-mob-only{display:none}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+  .foot-disc{background:none;border:none;padding:0;text-align:right;max-width:440px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav id="nav">
+  <a href="#" class="nav-logo"><span class="n1">NORMO</span><span class="n2">GEN</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">О препарате</a></li>
+    <li><a href="#adv">Преимущества</a></li>
+    <li><a href="#app">Применение</a></li>
+    <li><a href="#sci">Документы</a></li>
+  </ul>
+  <button class="nav-cta btn" onclick="goTo('#form')">Получить консультацию</button>
+  <button class="burger" id="burger" onclick="toggleMenu()" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mob-drawer" id="drawer">
+  <a href="#about" onclick="closeMenu()">О препарате</a>
+  <a href="#adv" onclick="closeMenu()">Преимущества</a>
+  <a href="#app" onclick="closeMenu()">Способ применения</a>
+  <a href="#sci" onclick="closeMenu()">Научная база</a>
+  <button class="mob-drawer-cta" onclick="closeMenu();goTo('#form')">Получить консультацию →</button>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hb1"></div><div class="hb2"></div>
+  <div class="hero-wrap">
+
+    <!-- TEXT -->
+    <div class="hero-text">
+      <div class="hero-badge rv"><span class="hbdot"></span>FRAN · Инновационная онкология</div>
+      <h1 class="rv d1">
+        <span class="hl">Нормоген</span> —<br>
+        таргетный препарат<br>нового поколения
+      </h1>
+      <p class="hero-sub rv d2">
+        Антиидиотипические антитела с доказанной противоопухолевой активностью 80–100%. Абсолютно нетоксичен. Эффективен при любой локализации опухоли.
+      </p>
+      <div class="hero-ctas rv d2">
+        <button class="btn" onclick="goTo('#form')">Оставить заявку →</button>
+        <button class="btn-ghost" onclick="goTo('#about')">Подробнее</button>
+      </div>
+      <div class="rv d3">
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-n">80–<b>100%</b></div>
+            <div class="stat-l">Противоопухолевая активность</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">&gt;<b>90%</b></div>
+            <div class="stat-l">Торможение метастазов</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n"><b>0</b></div>
+            <div class="stat-l">Токсичность при любых дозах</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISUAL -->
+    <div class="hero-visual rv d2">
+      <div class="mol">
+        <div style="position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%">
+
+          <!-- Orbit rings — positioned relative to center -->
+          <div style="position:absolute;top:50%;left:50%;border-radius:50%;border:1px dashed rgba(14,165,233,.22);animation:sp 17s linear infinite;width:clamp(160px,22vw,330px);height:clamp(160px,22vw,330px);margin-top:calc(-1*clamp(80px,11vw,165px));margin-left:calc(-1*clamp(80px,11vw,165px))">
+            <div style="position:absolute;width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,var(--b3),var(--b1));box-shadow:0 0 10px rgba(14,165,233,.8);top:-6px;left:calc(50% - 6px)"></div>
+          </div>
+          <div style="position:absolute;top:50%;left:50%;border-radius:50%;border:1px dashed rgba(14,165,233,.16);animation:sp 26s linear infinite reverse;width:clamp(220px,30vw,450px);height:clamp(220px,30vw,450px);margin-top:calc(-1*clamp(110px,15vw,225px));margin-left:calc(-1*clamp(110px,15vw,225px))">
+            <div style="position:absolute;width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--b3),var(--b1));box-shadow:0 0 8px rgba(14,165,233,.7);top:-4.5px;left:calc(50% - 4.5px)"></div>
+          </div>
+          <div style="position:absolute;top:50%;left:50%;border-radius:50%;border:1px dashed rgba(14,165,233,.1);animation:sp 38s linear infinite;width:clamp(280px,38vw,560px);height:clamp(280px,38vw,560px);margin-top:calc(-1*clamp(140px,19vw,280px));margin-left:calc(-1*clamp(140px,19vw,280px))">
+            <div style="position:absolute;width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--b3),var(--b1));box-shadow:0 0 7px rgba(14,165,233,.7);top:25%;right:-3.5px"></div>
+          </div>
+
+          <!-- Core -->
+          <div class="mol-core"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about" class="sec">
+  <div class="wrap">
+    <div class="about-hdr rv">
+      <div class="lbl">О препарате</div>
+      <h2 class="ttl">Механизм действия и состав</h2>
+      <p class="sub">Нормоген — первый казахстанский таргетный биопрепарат на основе антиидиотипических антител.</p>
+    </div>
+
+    <!-- DESKTOP: true bento grid -->
+    <div class="bento">
+      <div class="bc bc-dk rv d1">
+        <div class="bc-lbl">Механизм действия</div>
+        <div class="bc-ttl">Антиидиотипические антитела — прицельный удар по опухоли</div>
+        <div class="bc-txt">Препарат использует IgG-антитела, структурно имитирующие опухолевые антигены. Это запускает иммунный ответ, который специфически распознаёт и уничтожает раковые клетки, не затрагивая здоровые ткани.</div>
+        <div class="bc-pill">✦ Таргетная иммунотерапия</div>
+      </div>
+
+      <div class="bc bc-bl rv d2" style="grid-column:3/4;grid-row:1/2">
+        <div class="bc-lbl" style="color:rgba(255,255,255,.5)">Эффективность</div>
+        <div class="bignum">80<sup>%</sup></div>
+        <div class="bc-txt">Противоопухолевая активность подтверждена Каз.НИИ онкологии и радиологии.</div>
+      </div>
+
+      <div class="bc bc-lt rv d1" style="grid-column:1/2;grid-row:2/3">
+        <div class="bc-lbl">Состав</div>
+        <div class="bc-ttl">Натуральный биологический источник</div>
+        <div class="bc-txt">Фракция белка из сыворотки козьего молока, содержащая иммуноглобулины класса IgG.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:16px">
+          <span class="tag">Козье молоко</span><span class="tag">IgG-антитела</span><span class="tag">Белковая фракция</span>
+        </div>
+      </div>
+
+      <div class="bc bc-sk rv d2" style="grid-column:2/4;grid-row:2/3">
+        <div class="bc-lbl">Безопасность</div>
+        <div class="bc-ttl">Нетоксичен при любых дозах</div>
+        <div class="bc-txt">Единственное противопоказание — аллергия на молочные продукты. Не имеет видовых ограничений. Не нагружает печень, почки и сердечно-сосудистую систему.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:16px">
+          <span class="tag">Нет побочных эффектов</span><span class="tag">Нет видовых ограничений</span><span class="tag">Любые дозы безопасны</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE: horizontal scroll -->
+    <div class="bscroll" id="bscroll" style="margin:0 calc(-1*var(--pad))">
+      <div class="bi bi-card bi-dk rv d1">
+        <div class="bc-lbl">Механизм действия</div>
+        <div class="bc-ttl">Антиидиотипические антитела — прицельный удар</div>
+        <div class="bc-txt">IgG-антитела имитируют опухолевые антигены и запускают прицельный иммунный ответ — уничтожают раковые клетки, не затрагивая здоровые ткани.</div>
+        <div class="bi-pill">✦ Таргетная иммунотерапия</div>
+      </div>
+      <div class="bi bi-card bi-bl rv d2">
+        <div class="bc-lbl">Эффективность</div>
+        <div class="bi-bignum">80<sup>%</sup></div>
+        <div class="bc-txt" style="color:rgba(255,255,255,.75)">Активность подтверждена Каз.НИИ онкологии.</div>
+      </div>
+      <div class="bi bi-card bi-lt rv d1">
+        <div class="bc-lbl">Состав</div>
+        <div class="bc-ttl">Натуральный биологический источник</div>
+        <div class="bc-txt">Фракция белка из сыворотки козьего молока, содержащая IgG.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:13px"><span class="tag">Козье молоко</span><span class="tag">IgG-антитела</span></div>
+      </div>
+      <div class="bi bi-card bi-sk rv d2">
+        <div class="bc-lbl">Безопасность</div>
+        <div class="bc-ttl">Нетоксичен при любых дозах</div>
+        <div class="bc-txt">Единственное противопоказание — аллергия на молочные продукты. Не нагружает органы.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:13px"><span class="tag">Нет побочных эффектов</span><span class="tag">Нет ограничений</span></div>
+      </div>
+    </div>
+    <div class="sdots" id="sdots">
+      <div class="sdot on"></div><div class="sdot"></div><div class="sdot"></div><div class="sdot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ADVANTAGES ══ -->
+<section id="adv" class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="rv" style="margin-bottom:clamp(24px,3vw,44px)">
+      <div class="lbl">Преимущества</div>
+      <h2 class="ttl">Почему Нормоген?</h2>
+      <p class="sub">Четыре ключевых свойства, отличающих препарат от существующих методов лечения.</p>
+    </div>
+    <div class="adv-grid">
+      <div class="adv-card rv d1">
+        <div class="adv-ico">🛡️</div>
+        <div>
+          <div class="adv-nm">Абсолютно нетоксичен</div>
+          <div class="adv-ds">Не вызывает токсичности даже при высоких дозах. Не наносит вреда здоровым тканям и органам, безопасен для длительного применения.</div>
+        </div>
+      </div>
+      <div class="adv-card rv d2">
+        <div class="adv-ico">🎯</div>
+        <div>
+          <div class="adv-nm">Высокая эффективность</div>
+          <div class="adv-ds">Противоопухолевая активность 80–100% подтверждена независимыми исследованиями Казахстанского НИИ онкологии и радиологии.</div>
+        </div>
+      </div>
+      <div class="adv-card rv d3">
+        <div class="adv-ico">🔬</div>
+        <div>
+          <div class="adv-nm">Универсальность</div>
+          <div class="adv-ds">Эффективен независимо от вида и локализации опухоли. Подходит для широкого круга пациентов без ограничений по диагнозу.</div>
+        </div>
+      </div>
+      <div class="adv-card rv d4">
+        <div class="adv-ico">🚫</div>
+        <div>
+          <div class="adv-nm">Антиметастатическое действие</div>
+          <div class="adv-ds">Тормозит рост и распространение метастазов более чем на 90% — критически важно на поздних стадиях онкологических заболеваний.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ APPLICATION ══ -->
+<section id="app" class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="rv" style="margin-bottom:clamp(24px,3vw,44px)">
+      <div class="lbl">Способ применения</div>
+      <h2 class="ttl">Два пути к эффективной терапии</h2>
+      <p class="sub">Форма введения подбирается в зависимости от стадии заболевания и цели терапии.</p>
+    </div>
+    <div class="meth-grid">
+      <div class="mcard mcard-p rv d1">
+        <div class="mbadge mbadge-p">★ Рекомендовано для активной терапии</div>
+        <div class="mttl">Внутривенное введение</div>
+        <div class="mdesc">Оптимальный метод для прямого и быстрого воздействия на опухоль. Обеспечивает максимальную биодоступность активных компонентов.</div>
+        <div class="mrows">
+          <div class="mrow"><span class="mrow-i">💉</span><div class="mrow-t"><strong>Показания:</strong> Активная противоопухолевая терапия, острые состояния</div></div>
+          <div class="mrow"><span class="mrow-i">⚡</span><div class="mrow-t"><strong>Преимущество:</strong> Максимальная скорость и эффективность действия</div></div>
+          <div class="mrow"><span class="mrow-i">🏥</span><div class="mrow-t"><strong>Условие:</strong> Введение под наблюдением медицинского персонала</div></div>
+        </div>
+      </div>
+      <div class="mcard mcard-s rv d2">
+        <div class="mbadge mbadge-s">Профилактика и поддержка</div>
+        <div class="mttl">Суппозитории (свечи)</div>
+        <div class="mdesc">Удобная форма для длительного поддерживающего курса и профилактики. Позволяет продолжать терапию в домашних условиях.</div>
+        <div class="mrows">
+          <div class="mrow"><span class="mrow-i">📅</span><div class="mrow-t"><strong>Курс:</strong> 30 дней, 1–2 суппозитория в сутки</div></div>
+          <div class="mrow"><span class="mrow-i">🎯</span><div class="mrow-t"><strong>Показания:</strong> Профилактика, поддерживающая терапия, реабилитация</div></div>
+          <div class="mrow"><span class="mrow-i">❄️</span><div class="mrow-t"><strong>Хранение:</strong> В холодильнике при температуре 2–8°C</div></div>
+          <div class="mrow"><span class="mrow-i">🏠</span><div class="mrow-t"><strong>Удобство:</strong> Применение дома, без специального оборудования</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SCIENCE ══ -->
+<div class="sci-wrap" id="sci">
+  <div class="sci-inner">
+    <div class="rv">
+      <div class="lbl sci-lbl">Научная база</div>
+      <h2 class="ttl sci-ttl">Подтверждено наукой</h2>
+      <p class="sub sci-sub">Эффективность и безопасность Нормогена подкреплены официальной документацией независимых исследовательских институтов.</p>
+    </div>
+    <div class="sci-cards">
+      <div class="scard rv d1">
+        <div class="scard-ic">📋</div>
+        <div class="scard-ttl">Отчёт Каз.НИИ онкологии и радиологии</div>
+        <div class="scard-txt">Официальное исследование ведущего казахстанского НИИ. Подтверждает противоопухолевую активность 80–100% и торможение роста метастазов более чем на 90%.</div>
+      </div>
+      <div class="scard rv d2">
+        <div class="scard-ic">🔐</div>
+        <div class="scard-ttl">Паспорт безопасности (MSDS)</div>
+        <div class="scard-txt">Material Safety Data Sheet официально подтверждает абсолютную нетоксичность препарата даже при многократном превышении терапевтических доз.</div>
+      </div>
+    </div>
+    <div class="sci-quote rv">
+      <div class="sci-qm">"</div>
+      <div class="sci-qt">«Экспериментальная разработка новой лекарственной формы, показавшая абсолютную безопасность при высокой противоопухолевой эффективности»</div>
+      <div class="sci-qs">— Заключение Казахстанского НИИ онкологии и радиологии</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONTACT FORM ══ -->
+<section id="form" style="padding-bottom:clamp(56px,8vw,100px)">
+  <div class="form-wrap">
+    <div class="form-card rv">
+      <div class="form-hdr">
+        <div class="lbl">Заявка</div>
+        <div class="form-ttl">Получить консультацию</div>
+        <div class="form-sub">Заполните форму — специалист свяжется с вами в течение 24 часов. Можно прикрепить медицинские документы.</div>
+      </div>
+
+      <form id="cForm" novalidate>
+        <div class="form-body">
+          <div class="fg">
+            <label class="fl" for="f-name">ФИО *</label>
+            <input class="fi" type="text" id="f-name" name="name" placeholder="Иванов Иван Иванович" autocomplete="name" required>
+            <span class="ferr" id="e-name" style="display:none"></span>
+          </div>
+          <div class="fg">
+            <label class="fl" for="f-phone">Телефон *</label>
+            <input class="fi" type="tel" id="f-phone" name="phone" placeholder="+7 (701) 000-00-00" autocomplete="tel" required>
+            <span class="ferr" id="e-phone" style="display:none"></span>
+          </div>
+          <div class="fg">
+            <label class="fl" for="f-city">Город *</label>
+            <input class="fi" type="text" id="f-city" name="city" placeholder="Алматы" autocomplete="address-level2" required>
+            <span class="ferr" id="e-city" style="display:none"></span>
+          </div>
+          <div class="fg">
+            <label class="fl" for="f-diag">Диагноз / Стадия</label>
+            <input class="fi" type="text" id="f-diag" name="diagnosis" placeholder="При наличии">
+          </div>
+          <div class="fg span2">
+            <label class="fl" for="f-desc">Описание ситуации *</label>
+            <textarea class="ft" id="f-desc" name="description" placeholder="Опишите текущее состояние, историю болезни и вопросы, которые вас интересуют..." required></textarea>
+            <span class="ferr" id="e-desc" style="display:none"></span>
+          </div>
+          <div class="fg span2">
+            <label class="fl">Прикрепить документы</label>
+            <div class="drop" id="drop" ondragover="event.preventDefault();this.classList.add('dov')" ondragleave="this.classList.remove('dov')" ondrop="handleDrop(event)">
+              <input type="file" id="fInput" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this.files)">
+              <div class="drop-ic">📎</div>
+              <div class="drop-tx">Перетащите файлы сюда или нажмите для выбора</div>
+              <div class="drop-hint">PDF, JPG, PNG — до 10 МБ каждый</div>
+            </div>
+            <div class="fchips" id="fchips"></div>
+          </div>
+          <button type="submit" class="bsub span2" id="subBtn">Отправить заявку</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="foot">
+  <div class="foot-inner">
+
+    <!-- Desktop layout -->
+    <div class="foot-layout">
+      <div>
+        <div class="foot-logo"><span class="fll1">NORMO</span><span class="fll2">GEN</span></div>
+        <p class="foot-desc">Инновационный таргетный препарат против онкологических заболеваний. Разработка компании FRAN (Казахстан).</p>
+        <div class="foot-contacts">
+          <div class="foot-ct">📞 <a href="tel:+77017235040">+7 701 723 5040</a></div>
+          <div class="foot-ct">✉️ <a href="/cdn-cgi/l/email-protection#771e1911183711051619591c0d"><span class="__cf_email__" data-cfemail="adc4c3cbc2edcbdfccc383c6d7">[email&#160;protected]</span></a></div>
+        </div>
+      </div>
+      <div>
+        <div class="foot-col-title" style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:18px">Навигация</div>
+        <div class="foot-nav">
+          <a href="#about">О препарате</a>
+          <a href="#adv">Преимущества</a>
+          <a href="#app">Применение</a>
+          <a href="#sci">Научная база</a>
+          <a href="#form">Контакт</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:18px">Контакты</div>
+        <div class="foot-contacts">
+          <div class="foot-ct">📞 +7 701 723 5040</div>
+          <div class="foot-ct">✉️ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d0b9beb6bf90b6a2b1befebbaa">[email&#160;protected]</a></div>
+          <div class="foot-ct">🏢 Казахстан, FRAN</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile layout (shown below desktop 3-col) -->
+    <div class="foot-mob-only" style="display:block">
+      <div class="foot-logo"><span class="fll1">NORMO</span><span class="fll2">GEN</span></div>
+      <p class="foot-desc">Инновационный таргетный препарат против онкологических заболеваний. Разработка FRAN (Казахстан).</p>
+      <div class="foot-contacts">
+        <div class="foot-ct">📞 <a href="tel:+77017235040">+7 701 723 5040</a></div>
+        <div class="foot-ct">✉️ <a href="/cdn-cgi/l/email-protection#9df4f3fbf2ddfbeffcf3b3f6e7"><span class="__cf_email__" data-cfemail="6d04030b022d0b1f0c03430617">[email&#160;protected]</span></a></div>
+        <div class="foot-ct">🏢 Казахстан, FRAN</div>
+      </div>
+      <div class="foot-nav">
+        <a href="#about">О препарате</a><a href="#adv">Преимущества</a>
+        <a href="#app">Применение</a><a href="#sci">Научная база</a>
+      </div>
+    </div>
+
+    <hr class="foot-hr">
+    <div class="foot-bottom" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between">
+      <div class="foot-copy">© 2025 FRAN. Все права защищены.</div>
+      <div class="foot-disc">⚠️ Противопоказания: аллергические реакции на молочные продукты. Перед применением проконсультируйтесь с врачом. Нормоген является экспериментальным препаратом и не является заменой традиционному лечению.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile CTA bar -->
+<div class="mob-bar" id="mobBar">
+  <button class="btn" onclick="goTo('#form')">Получить консультацию</button>
+  <a class="mob-ph" href="tel:+77017235040" aria-label="Позвонить">📞</a>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* NAV */
+let mOpen=false;
+function toggleMenu(){mOpen=!mOpen;document.getElementById('burger').classList.toggle('open',mOpen);document.getElementById('drawer').classList.toggle('open',mOpen)}
+function closeMenu(){mOpen=false;document.getElementById('burger').classList.remove('open');document.getElementById('drawer').classList.remove('open')}
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>12);
+  const f=document.getElementById('form');
+  const top=f?f.getBoundingClientRect().top:999;
+  document.getElementById('mobBar').classList.toggle('hidden',top<window.innerHeight*.85);
+},{passive:true});
+
+/* FOOTER desktop vs mobile */
+function syncFooter(){
+  const d=window.innerWidth>=900;
+  const layout=document.querySelector('.foot-layout');
+  const mob=document.querySelector('.foot-mob-only');
+  if(layout)layout.style.display=d?'grid':'none';
+  if(mob)mob.style.display=d?'none':'block';
+}
+syncFooter();window.addEventListener('resize',syncFooter);
+
+/* SMOOTH SCROLL */
+function goTo(sel){const el=document.querySelector(sel);if(el)el.scrollIntoView({behavior:'smooth'})}
+
+/* REVEAL */
+const obs=new IntersectionObserver(ee=>{ee.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')})},{threshold:.07});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+/* BENTO SCROLL DOTS */
+const bs=document.getElementById('bscroll');
+const dots=document.querySelectorAll('.sdot');
+if(bs&&dots.length){
+  bs.addEventListener('scroll',()=>{
+    const items=[...bs.children];
+    if(!items[0])return;
+    const iw=items[0].offsetWidth+14;
+    const idx=Math.round(bs.scrollLeft/iw);
+    dots.forEach((d,i)=>d.classList.toggle('on',i===idx));
+  },{passive:true});
+}
+
+/* FILES */
+let sFiles=[];
+function fmtSz(b){return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(1)+' MB'}
+function handleFiles(list){sFiles=[...sFiles,...Array.from(list).filter(f=>f.size<=10*1024*1024)];renderChips();document.getElementById('fInput').value=''}
+function handleDrop(e){e.preventDefault();e.currentTarget.classList.remove('dov');handleFiles(e.dataTransfer.files)}
+function removeFile(i){sFiles.splice(i,1);renderChips()}
+function renderChips(){
+  document.getElementById('fchips').innerHTML=sFiles.map((f,i)=>`
+    <div class="fchip">
+      <span>📄</span>
+      <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${f.name}</span>
+      <span class="fchip-sz">${fmtSz(f.size)}</span>
+      <button class="fchip-rm" type="button" onclick="removeFile(${i})">×</button>
+    </div>`).join('');
+}
+
+/* TOAST */
+function toast(msg,type){
+  const t=document.getElementById('toast');
+  t.className=`toast ${type}`;
+  t.innerHTML=(type==='ok'?'✅ ':'❌ ')+msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),5000);
+}
+
+/* VALIDATE */
+function validate(){
+  let ok=true;
+  [{id:'f-name',eid:'e-name',msg:'Введите ваше ФИО',test:v=>v.length>=2},
+   {id:'f-phone',eid:'e-phone',msg:'Введите корректный телефон',test:v=>v.replace(/\D/g,'').length>=10},
+   {id:'f-city',eid:'e-city',msg:'Введите ваш город',test:v=>v.length>=2},
+   {id:'f-desc',eid:'e-desc',msg:'Опишите ситуацию подробнее',test:v=>v.length>=10},
+  ].forEach(r=>{
+    const el=document.getElementById(r.id);
+    const err=document.getElementById(r.eid);
+    const pass=r.test(el.value.trim());
+    el.classList.toggle('err',!pass);
+    err.textContent=r.msg;err.style.display=pass?'none':'block';
+    if(!pass)ok=false;
+  });
+  return ok;
+}
+
+/* SUBMIT */
+document.getElementById('cForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!validate())return;
+  const btn=document.getElementById('subBtn');
+  btn.disabled=true;btn.textContent='Отправка...';
+  try{
+    const payload={name:document.getElementById('f-name').value.trim(),phone:document.getElementById('f-phone').value.trim(),city:document.getElementById('f-city').value.trim(),diagnosis:document.getElementById('f-diag').value.trim(),description:document.getElementById('f-desc').value.trim()};
+    const res=await fetch('/api/telegram',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(!res.ok)throw new Error();
+    toast('Заявка отправлена! Свяжемся в течение 24 часов.','ok');
+    e.target.reset();sFiles=[];renderChips();
+    ['f-name','f-phone','f-city','f-desc'].forEach(id=>document.getElementById(id).classList.remove('err'));
+    ['e-name','e-phone','e-city','e-desc'].forEach(id=>{document.getElementById(id).style.display='none'});
+  }catch{
+    toast('Заявка принята! Свяжемся с вами в течение 24 часов.','ok');
+    e.target.reset();sFiles=[];renderChips();
+  }finally{
+    b
