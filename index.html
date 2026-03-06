@@ -50,7 +50,7 @@ nav{
   height:var(--nav-h);
   display:flex;align-items:center;justify-content:space-between;
   padding:0 var(--pad);
-  background:rgba(244,248,252,.8);
+  background:rgba(244,248,252,.95);
   backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
   border-bottom:1px solid rgba(14,165,233,.1);
   transition:background .3s,box-shadow .3s;
@@ -92,7 +92,7 @@ nav.scrolled{background:rgba(255,255,255,.96);box-shadow:0 1px 0 rgba(14,165,233
 .lbl::before{content:'';width:22px;height:2px;background:var(--b2);border-radius:99px;flex-shrink:0}
 h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);margin-bottom:12px;font-size:clamp(28px,3.5vw,48px)}
 .sub{font-size:clamp(15px,1.4vw,17px);color:var(--tx);line-height:1.72;max-width:520px}
-.sec{padding:clamp(56px,8vw,112px) 0}
+.sec{padding:clamp(56px,8vw,112px) 0;background:var(--bg)}
 
 /* Buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:14px 28px;border-radius:99px;font-size:15px;font-weight:700;letter-spacing:-.02em;color:#fff;background:linear-gradient(135deg,var(--b1),var(--b3));box-shadow:0 8px 24px -4px rgba(3,105,161,.38);transition:transform .18s,box-shadow .2s;white-space:nowrap;border:none;cursor:pointer;-webkit-appearance:none}
@@ -116,6 +116,7 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
   padding-top:var(--nav-h);
   display:flex;align-items:center;
   position:relative;overflow:hidden;
+  background:var(--bg);
 }
 .hero-wrap{
   max-width:var(--max);margin:0 auto;padding:0 var(--pad);
@@ -453,16 +454,13 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
    MOBILE CTA BAR
 ════════════════════════════════════════════════════════════════ */
 .mob-bar{
-  display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150;
-  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
-  background:rgba(255,255,255,.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-top:1px solid rgba(14,165,233,.1);box-shadow:0 -4px 24px -4px rgba(15,23,42,.1);
+  display:flex;position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));right:16px;z-index:150;
   gap:9px;transition:transform .4s;
+  flex-direction:column;align-items:flex-end;
 }
-.mob-bar.hidden{transform:translateY(120%)}
-.mob-bar .btn{flex:1;padding:13px;font-size:15px;border-radius:13px}
-.mob-ph{flex:0 0 48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:rgba(14,165,233,.1);border:1.5px solid rgba(14,165,233,.2);font-size:19px;transition:background .2s}
-.mob-ph:hover,.mob-ph:active{background:rgba(14,165,233,.2)}
+.mob-bar.hidden{transform:translateY(200%)}
+.mob-ph{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--b1),var(--b3));box-shadow:0 8px 24px -4px rgba(3,105,161,.5);font-size:22px;transition:transform .2s}
+.mob-ph:hover,.mob-ph:active{transform:scale(1.08)}
 
 /* ════════════════════════════════════════════════════════════════
    TOAST
@@ -794,7 +792,7 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
 </div>
 
 <!-- ══ CONTACT FORM ══ -->
-<section id="form" style="padding-bottom:clamp(56px,8vw,100px)">
+<section id="form" style="padding-bottom:clamp(56px,8vw,100px);background:var(--bg)">
   <div class="form-wrap">
     <div class="form-card rv">
       <div class="form-hdr">
@@ -905,7 +903,6 @@ h2.ttl{font-weight:800;letter-spacing:-.033em;line-height:1.07;color:var(--txd);
 
 <!-- Mobile CTA bar -->
 <div class="mob-bar" id="mobBar">
-  <button class="btn" onclick="goTo('#form')">Получить консультацию</button>
   <a class="mob-ph" href="tel:+77017235040" aria-label="Позвонить">📞</a>
 </div>
 
