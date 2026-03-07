@@ -448,8 +448,14 @@ document.getElementById('cForm').addEventListener('submit',async e=>{
   e.preventDefault();if(!validate())return;
   const btn=document.getElementById('subBtn');btn.disabled=true;btn.textContent='Отправка...';
   try{
-    const payload={name:document.getElementById('f-name').value.trim(),phone:document.getElementById('f-phone').value.trim(),city:document.getElementById('f-city').value.trim(),diagnosis:document.getElementById('f-diag').value.trim(),description:document.getElementById('f-desc').value.trim()};
-    const res=await fetch('/api/telegram',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const fd=new FormData();
+    fd.append('name',document.getElementById('f-name').value.trim());
+    fd.append('phone',document.getElementById('f-phone').value.trim());
+    fd.append('city',document.getElementById('f-city').value.trim());
+    fd.append('diagnosis',document.getElementById('f-diag').value.trim());
+    fd.append('description',document.getElementById('f-desc').value.trim());
+    sFiles.forEach(f=>fd.append('files',f));
+    const res=await fetch('/api/telegram',{method:'POST',body:fd});
     if(!res.ok)throw new Error();
     toast('Заявка отправлена! Свяжемся в течение 24 часов.','ok');
     e.target.reset();sFiles=[];renderChips();
