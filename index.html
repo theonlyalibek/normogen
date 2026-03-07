@@ -31,7 +31,7 @@ a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--b2);border-radius:99px}
 
-body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");background-size:200px 200px;opacity:.5}
+/* noise texture removed — caused click issues in some browsers */
 
 nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;justify-content:center;padding:0 20px;background:rgba(246,249,252,.6);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid transparent;transition:all .35s cubic-bezier(.4,0,.2,1)}
 nav.scrolled{background:rgba(255,255,255,.92);border-bottom-color:rgba(7,89,133,.06);box-shadow:0 1px 0 rgba(7,89,133,.04),0 4px 24px -4px rgba(15,23,42,.07)}
@@ -67,7 +67,7 @@ h2.ttl{font-family:var(--font-display);font-weight:400;letter-spacing:-.02em;lin
 .sec{padding:clamp(60px,9vw,120px) 0}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 30px;border-radius:99px;font-size:15px;font-weight:700;letter-spacing:-.01em;color:#fff;background:var(--b1);box-shadow:0 2px 8px rgba(7,89,133,.2),0 8px 24px -8px rgba(7,89,133,.3);transition:all .25s cubic-bezier(.4,0,.2,1);white-space:nowrap;border:none;cursor:pointer;-webkit-appearance:none;position:relative;overflow:hidden}
-.btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.12) 50%,transparent 60%);transform:translateX(-100%);transition:transform .5s}
+.btn::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.12) 50%,transparent 60%);transform:translateX(-100%);transition:transform .5s}
 .btn:hover::after{transform:translateX(100%)}
 .btn:hover{background:var(--b2);box-shadow:0 4px 12px rgba(7,89,133,.25),0 12px 32px -8px rgba(7,89,133,.35);transform:translateY(-2px)}
 .btn:active{transform:scale(.97)}
@@ -232,7 +232,7 @@ h2.ttl{font-family:var(--font-display);font-weight:400;letter-spacing:-.02em;lin
 .fchip-rm{margin-left:5px;color:#94A3B8;font-size:17px;line-height:1;background:none;border:none;cursor:pointer;flex-shrink:0;transition:color .2s}
 .fchip-rm:hover{color:var(--danger)}
 .bsub{width:100%;padding:clamp(14px,1.8vw,18px);border-radius:15px;font-size:clamp(15px,1.4vw,17px);font-weight:700;color:#fff;border:none;cursor:pointer;background:var(--b1);box-shadow:0 2px 8px rgba(7,89,133,.2),0 8px 24px -4px rgba(7,89,133,.25);transition:all .25s;-webkit-appearance:none;position:relative;overflow:hidden}
-.bsub::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.1) 50%,transparent 60%);transform:translateX(-100%);transition:transform .5s}
+.bsub::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.1) 50%,transparent 60%);transform:translateX(-100%);transition:transform .5s}
 .bsub:hover::after{transform:translateX(100%)}
 .bsub:hover{background:var(--b2);box-shadow:0 4px 12px rgba(7,89,133,.25),0 12px 36px -4px rgba(7,89,133,.3);transform:translateY(-2px)}
 .bsub:active{transform:scale(.98)}.bsub:disabled{opacity:.55;cursor:not-allowed;transform:none}
@@ -287,7 +287,7 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 <div class="scroll-progress" id="scrollProgress"></div>
 <nav id="nav"><div class="nav-inner">
   <a href="#" class="nav-logo"><span class="n1">NORMO</span><span class="n2">GEN</span></a>
-  <ul class="nav-links"><li><a href="#about">О препарате</a></li><li><a href="#adv">Преимущества</a></li><li><a href="#app">Применение</a></li><li><a href="#sci">Документы</a></li></ul>
+  <ul class="nav-links"><li><a href="#about" onclick="event.preventDefault();goTo('#about')">О препарате</a></li><li><a href="#adv" onclick="event.preventDefault();goTo('#adv')">Преимущества</a></li><li><a href="#app" onclick="event.preventDefault();goTo('#app')">Применение</a></li><li><a href="#sci" onclick="event.preventDefault();goTo('#sci')">Документы</a></li></ul>
   <button class="nav-cta" onclick="goTo('#form')">Получить консультацию</button>
   <button class="burger" id="burger" onclick="toggleMenu()" aria-label="Открыть меню"><span></span><span></span><span></span></button>
 </div></nav>
