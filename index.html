@@ -380,6 +380,7 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
       <div class="fg"><label class="fl" for="f-city">Город *</label><input class="fi" type="text" id="f-city" name="city" placeholder="Алматы" autocomplete="address-level2" required><span class="ferr" id="e-city" style="display:none"></span></div>
       <div class="fg"><label class="fl" for="f-diag">Диагноз / Стадия</label><input class="fi" type="text" id="f-diag" name="diagnosis" placeholder="При наличии"></div>
       <div class="fg span2"><label class="fl" for="f-desc">Описание ситуации *</label><textarea class="ft" id="f-desc" name="description" placeholder="Опишите текущее состояние, историю болезни..." required></textarea><span class="ferr" id="e-desc" style="display:none"></span></div>
+      <div style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden" aria-hidden="true"><label for="f-company">Company</label><input type="text" id="f-company" name="company" tabindex="-1" autocomplete="off"></div>
       <div class="fg span2"><label class="fl">Прикрепить документы</label><div class="drop" id="drop" ondragover="event.preventDefault();this.classList.add('dov')" ondragleave="this.classList.remove('dov')" ondrop="handleDrop(event)"><input type="file" id="fInput" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" onchange="handleFiles(this.files)"><div class="drop-ic">📎</div><div class="drop-tx">Перетащите файлы или нажмите для выбора</div><div class="drop-hint">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX — до 10 МБ</div></div><div class="fchips" id="fchips"></div></div>
       <button type="submit" class="bsub span2" id="subBtn">Отправить заявку →</button>
     </div>
@@ -450,25 +451,49 @@ function toast(msg,type){const t=document.getElementById('toast');t.className='t
 
 function validate(){let ok=true;[{id:'f-name',eid:'e-name',msg:'Введите ваше ФИО',test:v=>v.length>=2},{id:'f-phone',eid:'e-phone',msg:'Введите корректный телефон',test:v=>v.replace(/\D/g,'').length>=10},{id:'f-city',eid:'e-city',msg:'Введите ваш город',test:v=>v.length>=2},{id:'f-desc',eid:'e-desc',msg:'Опишите ситуацию подробнее',test:v=>v.length>=10}].forEach(r=>{const el=document.getElementById(r.id);const err=document.getElementById(r.eid);const pass=r.test(el.value.trim());el.classList.toggle('err',!pass);err.textContent=r.msg;err.style.display=pass?'none':'block';if(!pass)ok=false});return ok}
 
+function getUtmParams(){var p=new URLSearchParams(window.location.search);var keys=['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];var r={};keys.forEach(function(k){var v=p.get(k);if(v)r[k]=v});return r}
+
 document.getElementById('cForm').addEventListener('submit',async e=>{
   e.preventDefault();if(!validate())return;
-  const btn=document.getElementById('subBtn');btn.disabled=true;btn.textContent='Отправка...';
+  var btn=document.getElementById('subBtn');btn.disabled=true;btn.textContent='Отправка...';
   try{
-    const fd=new FormData();
-    fd.append('name',document.getElementById('f-name').value.trim());
+    var fd=new FormData();
+    // CRM field mapping
+    fd.append('full_name',document.getElementById('f-name').value.trim());
     fd.append('phone',document.getElementById('f-phone').value.trim());
     fd.append('city',document.getElementById('f-city').value.trim());
-    fd.append('diagnosis',document.getElementById('f-diag').value.trim());
-    fd.append('description',document.getElementById('f-desc').value.trim());
-    sFiles.forEach(f=>fd.append('files',f));
-    const res=await fetch('/api/telegram',{method:'POST',body:fd});
-    if(!res.ok)throw new Error();
+    fd.append('diagnosis_stage',document.getElementById('f-diag').value.trim());
+    fd.append('situation_description',document.getElementById('f-desc').value.trim());
+    // Honeypot
+    var hp=document.getElementById('f-company');if(hp&&hp.value)fd.append('company',hp.value);
+    // Meta fields
+    fd.append('source','website');
+    fd.append('form_id','main_medical_form');
+    fd.append('page_url',window.location.href);
+    // UTM params
+    var utm=getUtmParams();Object.keys(utm).forEach(function(k){fd.append(k,utm[k])});
+    // Documents
+    if(sFiles.length>10){toast('Максимум 10 файлов','err');return}
+    sFiles.forEach(function(f){if(f.size>10*1024*1024){toast('Файл '+f.name+' превышает 10 МБ','err');return}fd.append('documents',f)});
+    // Submit to CRM
+    // Capture values for Telegram backup before CRM call
+    var tgData={name:fd.get('full_name'),phone:fd.get('phone'),city:fd.get('city'),diagnosis:fd.get('diagnosis_stage'),description:fd.get('situation_description')};
+    var res=await fetch('https://crmka-beta.vercel.app/api/public/lead-capture-multipart',{method:'POST',body:fd});
+    var data=null;try{data=await res.json()}catch(ex){}
+    if(!res.ok){var msg=(data&&data.error)?data.error:'Ошибка отправки';throw new Error(msg)}
     toast('Заявка отправлена! Свяжемся в течение 24 часов.','ok');
     e.target.reset();sFiles=[];renderChips();
     ['f-name','f-phone','f-city','f-desc'].forEach(function(id){document.getElementById(id).classList.remove('err')});
     ['e-name','e-phone','e-city','e-desc'].forEach(function(id){document.getElementById(id).style.display='none'});
     document.querySelectorAll('.form-step').forEach(function(s){s.classList.remove('filled')});
-  }catch(err){console.error('Submit error:',err);toast('Ошибка отправки. Позвоните: +7 776 178 81 73','err')}
+    // Also send to Telegram (fire-and-forget, non-blocking)
+    try{
+      var tfd=new FormData();
+      tfd.append('name',tgData.name);tfd.append('phone',tgData.phone);tfd.append('city',tgData.city);
+      tfd.append('diagnosis',tgData.diagnosis);tfd.append('description',tgData.description);
+      fetch('/api/telegram',{method:'POST',body:tfd}).catch(function(){})
+    }catch(ex){}
+  }catch(err){console.error('Submit error:',err);toast(err.message||'Ошибка отправки. Позвоните: +7 776 178 81 73','err')}
   finally{btn.disabled=false;btn.textContent='Отправить заявку →'}
 });
 </script>
